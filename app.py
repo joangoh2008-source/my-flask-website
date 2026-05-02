@@ -45,25 +45,50 @@ button,a {
 """
 
 # =========================================================
-# 🍽 MENU
+# 🍽 MENU (FIXED + CLEAN VERSION)
 # =========================================================
 menu = {
-    "Grilled Steak":25,
-    "Chicken Chop":18,
-    "Lamb Chop":28,
-    "Spaghetti Carbonara":16,
-    "Fish & Chips":15,
-    "Caesar Salad":12,
-    "Chicken Burger":12,
-    "Beef Burger":14,
-    "Cheese Fries":9,
-    "Coke":5,
-    "Sprite":5,
-    "Latte":9
+    "Grilled Steak": 25,
+    "Chicken Chop": 18,
+    "Lamb Chop": 28,
+    "Spaghetti Carbonara": 16,
+    "Fish & Chips": 15,
+    "Caesar Salad": 12,
+    "Chicken Burger": 12,
+    "Beef Burger": 14,
+    "Cheese Fries": 9,
+    "Garlic Bread": 8,
+    "Mac & Cheese": 13,
+    "Coke": 5,
+    "Sprite": 5,
+    "Latte": 9,
+    "Chocolate Milkshake": 10
 }
 
-images = {item:"https://source.unsplash.com/400x300/?"+item.replace(" ","") for item in menu}
+# =========================================================
+# 📸 IMAGES (FULLY MATCHED MENU)
+# =========================================================
+images = {
+    "Grilled Steak": "https://images.unsplash.com/photo-1558030006-450675393462",
+    "Chicken Chop": "https://images.unsplash.com/photo-1604908177522-040b7a0e8c58",
+    "Lamb Chop": "https://images.unsplash.com/photo-1544025162-d76694265947",
 
+    "Spaghetti Carbonara": "https://images.unsplash.com/photo-1525755662778-989d0524087e",
+    "Fish & Chips": "https://images.unsplash.com/photo-1571091718767-18b5b1457add",
+    "Caesar Salad": "https://images.unsplash.com/photo-1550304943-4f24f54ddde9",
+
+    "Chicken Burger": "https://images.unsplash.com/photo-1550547660-d9450f859349",
+    "Beef Burger": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+
+    "Cheese Fries": "https://images.unsplash.com/photo-1606755962773-d324e2d15d2f",
+    "Garlic Bread": "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+    "Mac & Cheese": "https://images.unsplash.com/photo-1543352634-99a5d50ae78e",
+
+    "Coke": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e",
+    "Sprite": "https://images.unsplash.com/photo-1625772299848-391b2a3b0d3f",
+    "Latte": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735",
+    "Chocolate Milkshake": "https://images.unsplash.com/photo-1572490122747-3968b75cc699"
+}
 # =========================================================
 # 🛒 SESSION CART
 # =========================================================
@@ -174,19 +199,26 @@ def home():
 # =========================================================
 @app.route("/menu")
 def menu_page():
-    cart=get_cart()
-    html=style+"<h2>Menu</h2>"
+    html = style + "<h2>🍽 Western Menu</h2>"
 
-    for item,price in menu.items():
-        html+=f"""
-        <div class='card'>
-        <img src='{images[item]}' width='200'><br>
-        <b>{item}</b><br>RM{price}<br>
-        <a href='/add/{item}'>Add</a>
+    for item, price in menu.items():
+
+        # 🔥 fallback image (prevent crash)
+        img = images.get(item, "https://via.placeholder.com/200?text=No+Image")
+
+        html += f"""
+        <div class="card">
+            <img src="{img}" width="200" height="150"
+                 style="object-fit:cover;border-radius:10px;"><br>
+
+            <b>{item}</b><br>
+            RM{price}<br><br>
+
+            <a href="/add/{item}">Add</a>
         </div>
         """
 
-    html+="<br><a href='/cart'>Cart</a>"
+    html += "<br><a href='/cart'>Go Cart</a>"
     return html
 
 # =========================================================
